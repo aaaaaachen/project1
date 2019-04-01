@@ -1,0 +1,10 @@
+img{
+	width: 300px;
+	
+}
+ul>li{
+	border: red solid 1px;
+	list-style: none;
+	display: block;
+	margin-right: 20px;
+}

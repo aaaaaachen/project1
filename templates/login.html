@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="../static/js/lib/jQuery/jquery-2.1.4.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../static/js/lib/bootstrap-3.3.7-dist/js/bootstrap.js" type="text/javascript" charset="utf-8"></script>
+		
+		<link rel="stylesheet" type="text/css" href="../static/js/lib/bootstrap-3.3.7-dist/css/bootstrap.css"/>
+		<style type="text/css">
+			.login{
+				padding-top: 40px;
+				width: 500px;
+				margin: 50px auto;
+				background-color: #C4E3F3;
+				height: 300px;
+			}
+			.login>form{
+				
+				text-align: center;
+			}
+			.login>form>input{
+				width: 250px;
+				height: 40px;
+				padding-left: 10px;
+				margin-top: 30px ;
+			}
+			.login>form>div{
+				margin: 30px;
+			}
+		</style>
+	</head>
+	<body>
+		<ul class="nav nav-pills">
+		  <li role="presentation" class="active"><a href="/">返回</a></li>
+		  <li role="presentation"><a href="/regist">注册</a></li>
+		</ul>
+		<div class="page-header">
+		  <h1 style="text-align: center;">欢迎登录</h1>
+		</div>
+		<div class="login">
+			<form action="/login" method="post">
+				<input type="text" name="username" placeholder="用户名:" />
+				<input type="password" name="password" placeholder="密码:" />
+				<div>
+					<button type="reset" class="btn btn-default" >重置</button>
+					<button type="submit" class="btn btn-default" >登录</button>
+				</div>
+				
+			</form>
+		</div>
+	</body>
+</html>

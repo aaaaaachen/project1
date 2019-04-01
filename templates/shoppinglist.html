@@ -1,0 +1,109 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="../static/js/lib/jQuery/jquery-2.1.4.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../static/js/lib/bootstrap-3.3.7-dist/js/bootstrap.js" type="text/javascript" charset="utf-8"></script>
+		
+		<link rel="stylesheet" type="text/css" href="../static/js/lib/bootstrap-3.3.7-dist/css/bootstrap.css"/>
+
+
+	</head>
+	<body>
+		<ul class="nav nav-pills" style="background-color: #AFD9EE;">
+		  <li role="presentation" class="active"><a href="/">返回</a></li>
+		  <li role="presentation"><a href="/quit">退出</a></li>
+		</ul>
+		<div class="page-header" >
+		  <h1 style="text-align: center;">商品首页</h1>
+		  <h2>欢迎{{userinfo}}光临</h2>
+		</div>
+		<div>
+			{% if shoppinglist %}
+			<ul class="list-group">
+				{% for good in shoppinglist %}
+				<table class="table table-bordered">
+					
+					<div>
+						<td>
+							<b>商品编号</b>
+						</td>
+						<td>
+							<b>商品名称</b>
+						</td>
+						<td>
+							<b>商品价格</b>
+						</td>
+						<td>
+							<b>操作</b>
+						</td>
+					</div>
+					
+					
+					<li>
+
+						<tr>
+							<td>{{good.id}}</td> 
+							<td>{{good.goodname}}</td>
+							<td>{{good.goodprice}}</td>
+							<td>
+								{% if userinfo == 'aaa' %}
+								<div class="dropdown" >
+									  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+										Dropdown
+										<span class="caret"></span>
+									  </button>
+									  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+										<li>
+											<form action="/delgood/{{good.id}}" method="post">
+												<!--<a href="/delgood/{{good.id}}"><button>删除</button></a>-->
+												<a href=""><button>删除</button></a>
+											</form>
+										</li>
+										<li>
+											<form action="/updgood/{{good.id}}" method="">
+												<a href=""><button>修改</button></a>
+											</form>
+										</li>
+										<li>
+											<form action="/addinfo/{{good.id}}">
+												<a href=""><button>添加详情</button></a>
+											</form>
+										</li>
+								
+									  </ul>
+								</div>
+								{% else %}
+								<form action="/order/{{good.id}}">
+										<a href="/order/{{good.id}}"><button type="button">购买</button></a>
+								</form>
+								{% endif %}
+							</td>
+						</tr>
+
+						
+					</li>
+					
+				</table>
+				{% endfor %}
+			</ul>
+			
+				{% if userinfo == 'aaa' %}
+				 <div>
+					 <a href="/addgood" >
+						<button type="button" class="btn btn-primary"
+						style="display: block; margin: 0 auto;">
+								添加				
+						</button>
+					 </a>					  
+				 </div> 
+				{% endif %}
+			{% else %}
+				<h1>nothing at all</h1>
+			{% endif %}
+		</div>
+		
+	</body>
+</html>

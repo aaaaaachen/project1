@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="../static/js/lib/jQuery/jquery-2.1.4.js" type="text/javascript" charset="utf-8"></script>
+		<script src="../static/js/lib/bootstrap-3.3.7-dist/js/bootstrap.js" type="text/javascript" charset="utf-8"></script>
+		
+		<link rel="stylesheet" type="text/css" href="../static/js/lib/bootstrap-3.3.7-dist/css/bootstrap.css"/>
+		<style type="text/css">
+			body { padding-bottom: 70px; }
+
+			.center-block {
+			  display: block;
+			  margin-left: auto;
+			  margin-right: auto;
+			}
+
+
+			.element {
+			  .center-block();
+			}
+		</style>
+		<link rel="stylesheet" type="text/css" href="../static/css/new_file.css"/>
+	</head>
+	<body>
+		<nav class="navbar navbar-default">
+		  <div class="container-fluid">
+			<!-- Brand and toggle get grouped for better mobile display -->
+			
+
+			<!-- Collect the nav links, forms, and other content for toggling -->
+			<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			  <ul class="nav navbar-nav">
+				
+			  </ul>
+			  <form class="navbar-form navbar-right">
+				  {% if userinfo %}
+					<button type="submit" class="btn btn-default">
+						<a href="/shoppinglist">hello&nbsp;{{userinfo}}</a>
+					</button>
+					<button type="submit" class="btn btn-default">
+						<a href="/quit">退出登录</a>
+					</button>
+				  {% else %}
+				  <button type="submit" class="btn btn-default">
+				  	<a href="/login">登录</a>
+				  </button>
+				  <button type="submit" class="btn btn-default">
+				  	<a href="/regist">注册</a>
+				  </button>
+				  {% endif %}
+			  </form>
+			  
+			</div><!-- /.navbar-collapse -->
+		  </div><!-- /.container-fluid -->
+		</nav>
+		<div class="jumbotron">
+
+			<h1 style="text-align: center;">Welcome</h1>
+
+		  <!-- <img src="img/83fdef15-d605-4892-aadb-b1f7a0357ea6.png" style="margin: 0 auto; display: block;"> -->
+		  <div class="box" id="box">
+		  		<div class="inner">
+		  			<!--轮播图-->
+		  			<ul>
+		  				<li><a href="#"><img src="../static/img/83fdef15-d605-4892-aadb-b1f7a0357ea6.png" alt=""></a></li>
+		  				<li><a href="#"><img src="../static/img/u=1613327678,2870994617&fm=26&gp=0.jpg" alt=""></a></li>
+		  				<li><a href="#"><img src="../static/img/u=3091208731,2909616263&fm=26&gp=0.jpg" alt=""></a></li>
+		  				<li><a href="#"><img src="../static/img/xj2015_09_13_18_21_51_mh1442140038385.jpg" alt=""></a></li>
+		  				<li><a href="#"><img src="../static/img/下载.jpg" alt=""></a></li>
+		  	 
+		  			</ul>
+		  	 
+		  			<ol class="bar">
+		  	 
+		  			</ol>
+		  			<!--左右焦点-->
+		  			<div id="arr">
+		  						<span id="left">
+		  							<
+		  						</span>
+		  				<span id="right">
+		  							>
+		  						</span>
+		  			</div>
+		  	 
+		  		</div>	
+		  	</div>
+		  
+		  <script>
+		  	/**
+		  	 *
+		  	 * @param id  传入元素的id
+		  	 * @returns {HTMLElement | null}  返回标签对象，方便获取元素
+		  	 */
+		  	function my$(id) {
+		  		return document.getElementById(id);
+		  	}
+		   
+		  	//获取各元素，方便操作
+		  	var box=my$("box");
+		  	var inner=box.children[0];
+		  	var ulObj=inner.children[0];
+		  	var list=ulObj.children;
+		  	var olObj=inner.children[1];
+		  	var arr=my$("arr");
+		  	var imgWidth=inner.offsetWidth;
+		  	var right=my$("right");
+		  	var pic=0;
+		  	//根据li个数，创建小按钮
+		  	for(var i=0;i<list.length;i++){
+		  		var liObj=document.createElement("li");
+		   
+		  		olObj.appendChild(liObj);
+		  		liObj.innerText=(i+1);
+		  		liObj.setAttribute("index",i);
+		   
+		  		//为按钮注册mouseover事件
+		  		liObj.onmouseover=function () {
+		  			//先清除所有按钮的样式
+		   
+		  			for (var j=0;j<olObj.children.length;j++){
+		  				olObj.children[j].removeAttribute("class");
+		  			}
+		  			this.className="current";
+		  			pic=this.getAttribute("index");
+		  			animate(ulObj,-pic*imgWidth);
+		  		}
+		   
+		  	}
+		   
+		   
+		  	//设置ol中第一个li有背景颜色
+		  	olObj.children[0].className = "current";
+		  	//克隆一个ul中第一个li,加入到ul中的最后=====克隆
+		  	ulObj.appendChild(ulObj.children[0].cloneNode(true));
+		   
+		  	var timeId=setInterval(onmouseclickHandle,2000);
+		  	//左右焦点实现点击切换图片功能
+		  	box.onmouseover=function () {
+		  		arr.style.display="block";
+		  		clearInterval(timeId);
+		  	};
+		  	box.onmouseout=function () {
+		  		arr.style.display="none";
+		  		timeId=setInterval(onmouseclickHandle,2000);
+		  	};
+		   
+		  	right.onclick=onmouseclickHandle;
+		  	function onmouseclickHandle() {
+		  		//如果pic的值是5,恰巧是ul中li的个数-1的值,此时页面显示第六个图片,而用户会认为这是第一个图,
+		  		//所以,如果用户再次点击按钮,用户应该看到第二个图片
+		  		if (pic == list.length - 1) {
+		  			//如何从第6个图,跳转到第一个图
+		  			pic = 0;//先设置pic=0
+		  			ulObj.style.left = 0 + "px";//把ul的位置还原成开始的默认位置
+		  		}
+		  		pic++;//立刻设置pic加1,那么此时用户就会看到第二个图片了
+		  		animate(ulObj, -pic * imgWidth);//pic从0的值加1之后,pic的值是1,然后ul移动出去一个图片
+		  		//如果pic==5说明,此时显示第6个图(内容是第一张图片),第一个小按钮有颜色,
+		  		if (pic == list.length - 1) {
+		  			//第五个按钮颜色干掉
+		  			olObj.children[olObj.children.length - 1].className = "";
+		  			//第一个按钮颜色设置上
+		  			olObj.children[0].className = "current";
+		  		} else {
+		  			//干掉所有的小按钮的背景颜色
+		  			for (var i = 0; i < olObj.children.length; i++) {
+		  				olObj.children[i].removeAttribute("class");
+		  			}
+		  			olObj.children[pic].className = "current";
+		  		}
+		  	}
+		  	left.onclick=function () {
+		  		if (pic==0){
+		  			pic=list.length-1;
+		  			ulObj.style.left=-pic*imgWidth+"px";
+		  		}
+		  		pic--;
+		  		animate(ulObj,-pic*imgWidth);
+		  		for (var i = 0; i < olObj.children.length; i++) {
+		  			olObj.children[i].removeAttribute("class");
+		  		}
+		  		//当前的pic索引对应的按钮设置颜色
+		  		olObj.children[pic].className = "current";
+		  	};
+		   
+		  	//设置任意的一个元素,移动到指定的目标位置
+		  	function animate(element, target) {
+		  		clearInterval(element.timeId);
+		  		//定时器的id值存储到对象的一个属性中
+		  		element.timeId = setInterval(function () {
+		  			//获取元素的当前的位置,数字类型
+		  			var current = element.offsetLeft;
+		  			//每次移动的距离
+		  			var step = 10;
+		  			step = current < target ? step : -step;
+		  			//当前移动到位置
+		  			current += step;
+		  			if (Math.abs(current - target) > Math.abs(step)) {
+		  				element.style.left = current + "px";
+		  			} else {
+		  				//清理定时器
+		  				clearInterval(element.timeId);
+		  				//直接到达目标
+		  				element.style.left = target + "px";
+		  			}
+		  		}, 10);
+		  	}
+		  </script>
+		  </div>
+		  <p> &nbsp;</p>
+		  <p style="text-align: center;">
+			  {% if userinfo %}
+			  <a class="btn btn-primary btn-lg" href="/quit" role="button">退出登录</a>
+			  {% else %}
+			  <a class="btn btn-primary btn-lg" href="/login" role="button">登录</a>
+			  <a class="btn btn-primary btn-lg" href="/regist" role="button">注册</a>
+			  {% endif %}
+		  </p>
+		</div>
+	</body>
+</html>
